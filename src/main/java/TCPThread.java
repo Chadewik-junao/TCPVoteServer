@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.net.Socket;
-
+//TCP线程类
 public class TCPThread implements Runnable{
     private Socket socket;
 

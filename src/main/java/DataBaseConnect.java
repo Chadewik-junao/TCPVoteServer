@@ -1,6 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+//数据库连接
 public class DataBaseConnect {
 
     public static void connext(String[] args) {

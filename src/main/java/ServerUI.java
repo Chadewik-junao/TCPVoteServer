@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//定义界面
 public class ServerUI extends JFrame {
     JFrame root;
     JPanel display, candidate, voteData, menu;

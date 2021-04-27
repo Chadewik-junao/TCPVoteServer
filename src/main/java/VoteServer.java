@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+//主类，程序入口
 public class VoteServer {
     private boolean isStart=false;
     public static void main(String[] args)throws IOException {
-        new VoteServer().start();
+        //new VoteServer().start();
         new ServerUI();
     }
 

@@ -3,7 +3,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
-
+//线程数据的控制类
 public class DataHandle {
     public DataHandle(Socket socket) throws Exception {
         Reader reader = new InputStreamReader(socket.getInputStream());
