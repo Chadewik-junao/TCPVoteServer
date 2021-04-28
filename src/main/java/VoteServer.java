@@ -5,8 +5,8 @@ import java.net.Socket;
 public class VoteServer {
     private boolean isStart=false;
     public static void main(String[] args)throws IOException {
-        //new VoteServer().start();
-        new ServerUI();
+        new VoteServer().start();
+        //new ServerUI();
     }
 
     void start() throws IOException {
