@@ -3,15 +3,22 @@ import java.net.Socket;
 //线程数据的控制类
 public class DataHandle {
 
-    public DataHandle(Socket socket) throws Exception {
+    public DataHandle(TCPThread tcpThread) throws Exception {
         //对象数据的输入与输出，需要用ObjectInputStream和ObjectOutputStream进行
-        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream inputStream=tcpThread.getInputStream();
+        ObjectOutputStream outputStream=tcpThread.getOutputStream();
+
         TCPVoteMsg clientMsg=(TCPVoteMsg)inputStream.readObject();
         while(clientMsg.getStatusCode()!=-1){
+
             System.out.println("get client Msg:"+clientMsg.getStatusCode());
+            System.out.println("get client Vote:"+clientMsg.getVoteId());
             outputStream.writeObject(new TCPVoteMsg(999));
+            clientMsg=(TCPVoteMsg)inputStream.readObject();
         }
+
+
+
 //        Reader reader = new InputStreamReader(socket.getInputStream());
 //        char chars[] = new char[64];
 //        int len;
