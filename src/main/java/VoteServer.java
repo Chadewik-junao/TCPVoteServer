@@ -1,12 +1,23 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+
 //主类，程序入口
 public class VoteServer {
     private boolean isStart=false;
+    private static DataBaseConnect dbConnect;
     public static void main(String[] args)throws IOException {
-        new VoteServer().start();
-        //new ServerUI();
+//        dbConnect=new DataBaseConnect();
+//        try {
+//            List result=dbConnect.selectVoteTable();
+//            System.out.println(result);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        new VoteServer().start();//开启线程
+        //new ServerUI();//界面
+
     }
 
     void start() throws IOException {
@@ -24,7 +35,6 @@ public class VoteServer {
 
     void finish(){
         setStart(false);
-
     }
 
     private void setStart(boolean setStart){

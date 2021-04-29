@@ -3,9 +3,11 @@ import java.util.List;
 
 //传输数据包类
 public class TCPVoteMsg implements Serializable {
+    private static final long serialVersionUID = 2996557907914742824L;
 
     //自定义实体类，作为对象数据流传输，需要继承java.io.Serializable，使用对象进行序列化
-    private static final long serialVersionUID = 111;
+
+//    private static final long serialVersionUID = 1111;
     //指定UID，否则无法正常接收
     private int statusCode;
     //状态码
@@ -29,9 +31,8 @@ public class TCPVoteMsg implements Serializable {
         this.candidateId = candidateId;
     }
 
-    public TCPVoteMsg(int statusCode, String voteId, List<Vote> voteList) {
+    public TCPVoteMsg(int statusCode, List<Vote> voteList) {
         this.statusCode = statusCode;
-        this.voteId = voteId;
         this.voteList = voteList;
     }
 

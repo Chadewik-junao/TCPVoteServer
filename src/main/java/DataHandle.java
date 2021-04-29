@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
+
 //线程数据的控制类
 public class DataHandle {
 
@@ -7,18 +9,21 @@ public class DataHandle {
         //对象数据的输入与输出，需要用ObjectInputStream和ObjectOutputStream进行
         ObjectInputStream inputStream=tcpThread.getInputStream();
         ObjectOutputStream outputStream=tcpThread.getOutputStream();
-
         TCPVoteMsg clientMsg=(TCPVoteMsg)inputStream.readObject();
         while(clientMsg.getStatusCode()!=-1){
-
             System.out.println("get client Msg:"+clientMsg.getStatusCode());
             System.out.println("get client Vote:"+clientMsg.getVoteId());
-            outputStream.writeObject(new TCPVoteMsg(999));
+            DataBaseConnect dbConnect = new DataBaseConnect();
+            try {
+                List<Vote> result=dbConnect.selectVoteTable();
+                outputStream.writeObject(new TCPVoteMsg(999,result));
+                System.out.println(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //outputStream.writeObject(new TCPVoteMsg(999,result));
             clientMsg=(TCPVoteMsg)inputStream.readObject();
         }
-
-
-
 //        Reader reader = new InputStreamReader(socket.getInputStream());
 //        char chars[] = new char[64];
 //        int len;
@@ -41,5 +46,10 @@ public class DataHandle {
 //        writer.close();
 //        reader.close();
 //        socket.close();
+    }
+
+    //查询表单
+    public void selectDataBase(TCPVoteMsg clientMsg){
+
     }
 }

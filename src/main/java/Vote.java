@@ -1,11 +1,20 @@
+import java.io.Serializable;
 import java.sql.Date;
 
 //投票类
-public class Vote {
+public class Vote implements Serializable {
     private String voteId;//投票id
     private String voteName;//投票名
     private Date startDate, StopDate;//起止时间
     private int allVotes;//总票数
+
+    public Vote(String voteId, String voteName, Date startDate, Date stopDate, int allVotes) {
+        this.voteId = voteId;
+        this.voteName = voteName;
+        this.startDate = startDate;
+        StopDate = stopDate;
+        this.allVotes = allVotes;
+    }
 
     public String getVoteId() {
         return voteId;
