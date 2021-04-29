@@ -2,18 +2,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
 //TCP线程类
-public class TCPThread implements Runnable{
+public class TCPThread implements Runnable {
     private Socket socket;
-    ObjectInputStream inputStream ;
+    ObjectInputStream inputStream;
     ObjectOutputStream outputStream;
+    public volatile boolean flag = true;
 
     public TCPThread(Socket socket) {
         this.socket = socket;
     }
 
     public ObjectInputStream getInputStream() {
-        if(inputStream==null) {
+        if (inputStream == null) {
             try {
                 inputStream = new ObjectInputStream(socket.getInputStream());
             } catch (IOException e) {
@@ -23,8 +25,15 @@ public class TCPThread implements Runnable{
         return inputStream;
     }
 
+    public void close() throws IOException {
+        outputStream.close();
+        inputStream.close();
+        socket.close();
+        flag=false;
+    }
+
     public ObjectOutputStream getOutputStream() {
-        if (outputStream==null) {
+        if (outputStream == null) {
             try {
                 outputStream = new ObjectOutputStream(socket.getOutputStream());
             } catch (IOException e) {
@@ -33,8 +42,6 @@ public class TCPThread implements Runnable{
         }
         return outputStream;
     }
-
-
 
 
     @Override
@@ -47,11 +54,4 @@ public class TCPThread implements Runnable{
         }
     }
 
-    public void closeSocket(){
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -10,7 +10,7 @@ public class DataHandle {
         ObjectInputStream inputStream=tcpThread.getInputStream();
         ObjectOutputStream outputStream=tcpThread.getOutputStream();
         TCPVoteMsg clientMsg=(TCPVoteMsg)inputStream.readObject();
-        while(clientMsg.getStatusCode()!=-1){
+        while(tcpThread.flag){
             System.out.println("get client Msg:"+clientMsg.getStatusCode());
             System.out.println("get client Vote:"+clientMsg.getVoteId());
             DataBaseConnect dbConnect = new DataBaseConnect();
@@ -21,6 +21,7 @@ public class DataHandle {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            tcpThread.close();
             //outputStream.writeObject(new TCPVoteMsg(999,result));
             clientMsg=(TCPVoteMsg)inputStream.readObject();
         }
