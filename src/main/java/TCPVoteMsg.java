@@ -1,8 +1,10 @@
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Scanner;
 
 public class TCPVoteMsg implements Serializable {
     private static final long serialVersionUID = 111L;
@@ -16,17 +18,11 @@ public class TCPVoteMsg implements Serializable {
     private List<Vote> voteList;
     private List<Candidate> candidateList;
 
-    InetAddress ip4;
 
-    {
-        try {
-            ip4 = Inet4Address.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
 
-    ;
+    private String cpuid;
+    private InetAddress ip4;
+
 
     //状态码，查询全部投票；服务端返回消息
     public TCPVoteMsg(int statusCode) {
@@ -69,10 +65,33 @@ public class TCPVoteMsg implements Serializable {
     }
 
     public InetAddress getIp4() {
+        if(ip4==null)try {
+            ip4 = Inet4Address.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         return ip4;
     }
+    public String getCpuid() {
+        if(cpuid==null){try {
+            long start = System.currentTimeMillis();
+            Process process = Runtime.getRuntime().exec(
+                    new String[] { "wmic", "cpu", "get", "ProcessorId" });
+            process.getOutputStream().close();
+            Scanner sc = new Scanner(process.getInputStream());
+            sc.next();
+            cpuid = sc.next();
+            System.out.println(cpuid);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        }
+
+        return cpuid;
 
 
+    }
     public int getStatusCode() {
         return statusCode;
     }
