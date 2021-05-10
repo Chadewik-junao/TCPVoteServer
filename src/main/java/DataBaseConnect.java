@@ -63,9 +63,20 @@ public class DataBaseConnect {
     //查询对应投票的候选人
     public List<Candidate> selectCandidateTable(TCPVoteMsg clientMsg)throws Exception{
 
-        return null;
+        String sql="select * from candidatetable where "+clientMsg.getVoteId();
+        stt = dbConnection.createStatement();
+        List<Candidate> candidatesList=new ArrayList<>();
+        // 返回结果集
+        set = stt.executeQuery(sql);
+        // 获取数据
+        while (set.next()) {
+            candidatesList.add(new Candidate(set.getString(1),set.getString(2),set.getString(3),set.getInt(4)));
+            System.out.println(set.getString(1)+set.getString(2)+set.getString(3)+set.getString(4));
+        }
+        return candidatesList;
     }
 
+    //断开连接
     public void disConnect(){
 
     }

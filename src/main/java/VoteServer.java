@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -8,17 +10,22 @@ public class VoteServer {
     private boolean isStart=false;
     private static DataBaseConnect dbConnect;
     public static void main(String[] args)throws IOException {
-//        dbConnect=new DataBaseConnect();
-//        try {
-//            List result=dbConnect.selectVoteTable();
-//            System.out.println(result);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        new VoteServer().start();//开启线程
+        dbConnect=new DataBaseConnect();
+        try {
+//            List result=dbConnect.selectVoteTable();//输出投票表
+            InetAddress ip4 = Inet4Address.getLocalHost();
+            System.out.println(ip4.getHostAddress());
+
+            List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //new VoteServer().start();//开启线程
         //new ServerUI();//界面
 
     }
+
 
     void start() throws IOException {
         int port = 10086;

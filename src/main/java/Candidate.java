@@ -6,6 +6,14 @@ public class Candidate implements Serializable {
     private String voteId;//投票id
     private String candidateId;//候选人编号
     private String candidateName;//候选人名字
+    private int votes;//当前候选人获得票数
+
+    public Candidate(String voteId, String candidateId, String candidateName, int votes) {
+        this.voteId = voteId;
+        this.candidateId = candidateId;
+        this.candidateName = candidateName;
+        this.votes = votes;
+    }
 
     public void setVoteId(String voteId) {
         this.voteId = voteId;
@@ -23,7 +31,7 @@ public class Candidate implements Serializable {
         this.votes = votes;
     }
 
-    private int votes;//当前候选人获得票数
+
 
     public String getVoteId() {
         return voteId;
