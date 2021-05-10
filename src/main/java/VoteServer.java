@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.Scanner;
 
 //主类，程序入口
 public class VoteServer {
@@ -13,9 +14,19 @@ public class VoteServer {
         dbConnect=new DataBaseConnect();
         try {
 //            List result=dbConnect.selectVoteTable();//输出投票表
+
+
             InetAddress ip4 = Inet4Address.getLocalHost();
             System.out.println(ip4.getHostAddress());
-
+            long start = System.currentTimeMillis();
+            Process process = Runtime.getRuntime().exec(
+                    new String[] { "wmic", "cpu", "get", "ProcessorId" });
+            process.getOutputStream().close();
+            Scanner sc = new Scanner(process.getInputStream());
+            sc.next();
+            String cpuid = sc.next();
+            System.out.println(cpuid);
+            
             List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
             System.out.println(result);
         } catch (Exception e) {
