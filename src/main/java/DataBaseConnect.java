@@ -62,7 +62,6 @@ public class DataBaseConnect {
 
     //查询对应投票的候选人
     public List<Candidate> selectCandidateTable(TCPVoteMsg clientMsg)throws Exception{
-
         String sql="select * from candidatetable where "+clientMsg.getVoteId();
         stt = dbConnection.createStatement();
         List<Candidate> candidatesList=new ArrayList<>();
@@ -75,6 +74,17 @@ public class DataBaseConnect {
         }
         return candidatesList;
     }
+
+    public boolean insertVote(TCPVoteMsg clientMsg)throws Exception{
+        String sql = "insert into votertable('投票名','被投票人','投票人名字','时间','cpuId','ip地址') values('"+clientMsg.getVoteId()+"' , '"+clientMsg.getCandidateId()+"' , '"+clientMsg.getVoter().getVoterName()+"','"+clientMsg.getVoter().getTime()+"','"+clientMsg.getVoter().getCpuid()+"','"+clientMsg.getVoter().getIp4()+"');";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
+    }
+
 
     //断开连接
     public void disConnect(){

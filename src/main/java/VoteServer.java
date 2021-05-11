@@ -3,6 +3,8 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,21 +16,23 @@ public class VoteServer {
         dbConnect=new DataBaseConnect();
         try {
 //            List result=dbConnect.selectVoteTable();//输出投票表
-
-
-            InetAddress ip4 = Inet4Address.getLocalHost();
-            System.out.println(ip4.getHostAddress());
-            long start = System.currentTimeMillis();
-            Process process = Runtime.getRuntime().exec(
-                    new String[] { "wmic", "cpu", "get", "ProcessorId" });
-            process.getOutputStream().close();
-            Scanner sc = new Scanner(process.getInputStream());
-            sc.next();
-            String cpuid = sc.next();
-            System.out.println(cpuid);
-            
-            List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
-            System.out.println(result);
+//
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//            String time = df.format(new Date());
+//            System.out.println(time);
+//            InetAddress ip4 = Inet4Address.getLocalHost();
+//            System.out.println(ip4.getHostAddress());
+//            long start = System.currentTimeMillis();
+//            Process process = Runtime.getRuntime().exec(
+//                    new String[] { "wmic", "cpu", "get", "ProcessorId" });
+//            process.getOutputStream().close();
+//            Scanner sc = new Scanner(process.getInputStream());
+//            sc.next();
+//            String cpuid = sc.next();
+//            System.out.println(cpuid);
+//
+//            List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
+//            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
