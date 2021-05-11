@@ -76,7 +76,8 @@ public class DataBaseConnect {
     }
 
     public boolean insertVote(TCPVoteMsg clientMsg)throws Exception{
-        String sql = "insert into votertable('投票名','被投票人','投票人名字','时间','cpuId','ip地址') values('"+clientMsg.getVoteId()+"' , '"+clientMsg.getCandidateId()+"' , '"+clientMsg.getVoter().getVoterName()+"','"+clientMsg.getVoter().getTime()+"','"+clientMsg.getVoter().getCpuid()+"','"+clientMsg.getVoter().getIp4()+"');";
+        System.out.println(" id:"+clientMsg.getVoteId()+" cid:"+clientMsg.getVoter().getVoteCandidateId()+" name:"+clientMsg.getVoter().getVoterName()+" time:"+clientMsg.getVoter().getTime()+" cpuid:"+clientMsg.getVoter().getCpuid()+" ipv4:"+clientMsg.getVoter().getIp4());
+        String sql = "insert into votertable(`投票编号`,`被投票人`,`投票人名字`,`时间`,cpuId,`ip地址`) values('"+clientMsg.getVoteId()+"' , '"+clientMsg.getVoter().getVoteCandidateId()+"' , '"+clientMsg.getVoter().getVoterName()+"',NOW(),'"+clientMsg.getVoter().getCpuid()+"','"+clientMsg.getVoter().getIp4()+"');";
         //获取Statement对象
         stt = dbConnection.createStatement();
         //执行sql语句

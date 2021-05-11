@@ -17,7 +17,6 @@ public class TCPVoteMsg implements Serializable {
     private Voter voter;
 
 
-
     //状态码，查询全部投票；服务端返回消息
     public TCPVoteMsg(int statusCode) {
         this.statusCode = statusCode;
@@ -75,6 +74,21 @@ public class TCPVoteMsg implements Serializable {
         return candidateList;
     }
 
-    public Voter getVoter() { return voter; }
+    public Voter getVoter() {
+        return voter;
+    }
+
+    public void setVoteList(List<Vote> voteList) {
+        this.voteList = voteList;
+    }
+
+    public void setCandidateList(List<Candidate> candidateList) {
+        this.candidateList = candidateList;
+    }
+
+    public void setVoter(Voter voter) {
+        this.voter = voter;
+    }
+
 
 }

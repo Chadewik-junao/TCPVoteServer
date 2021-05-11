@@ -33,6 +33,9 @@ public class VoteServer {
 //
 //            List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
 //            System.out.println(result);
+            TCPVoteMsg clientMsg=new TCPVoteMsg(101,"001");
+            clientMsg.setVoter(new Voter("001","001001","cdk"));
+            System.out.println(dbConnect.insertVote(clientMsg));
         } catch (Exception e) {
             e.printStackTrace();
         }
