@@ -4,7 +4,10 @@ import java.util.List;
 
 
 public class TCPVoteMsg implements Serializable {
-    private static final long serialVersionUID = 111L;
+    private static final long serialVersionUID = 9999L;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
     //自定义实体类，作为对象数据流传输，需要继承java.io.Serializable，使用对象进行序列化
 
     //private static final long serialVersionUID = 1111;

@@ -10,10 +10,11 @@ import java.util.Scanner;
 
 //主类，程序入口
 public class VoteServer {
-    private boolean isStart=false;
-    private static DataBaseConnect dbConnect;
-    public static void main(String[] args)throws IOException {
-        dbConnect=new DataBaseConnect();
+    private boolean isStart = false;
+
+    //private static DataBaseConnect dbConnect;
+    public static void main(String[] args) throws IOException {
+        //dbConnect=new DataBaseConnect();
         try {
 //            List result=dbConnect.selectVoteTable();//输出投票表
 //
@@ -33,14 +34,15 @@ public class VoteServer {
 //
 //            List result=dbConnect.selectCandidateTable(new TCPVoteMsg(101,"001"));
 //            System.out.println(result);
-            TCPVoteMsg clientMsg=new TCPVoteMsg(101,"001");
-            clientMsg.setVoter(new Voter("001","001001","cdk"));
-            System.out.println(dbConnect.insertVote(clientMsg));
+//            TCPVoteMsg clientMsg=new TCPVoteMsg(101,"001");
+//            clientMsg.setVoter(new Voter("001","001001","cdk"));
+//            System.out.println(dbConnect.insertVote(clientMsg));
+            new ServerUI();//界面
+            new VoteServer().start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //new VoteServer().start();//开启线程
-        //new ServerUI();//界面
 
     }
 
@@ -58,12 +60,12 @@ public class VoteServer {
         }
     }
 
-    void finish(){
+    void finish() {
         setStart(false);
     }
 
-    private void setStart(boolean setStart){
-        this.isStart=setStart;
+    private void setStart(boolean setStart) {
+        this.isStart = setStart;
     }
 }
 

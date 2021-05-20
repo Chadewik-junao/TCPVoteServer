@@ -2,29 +2,50 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
-//线程数据的控制类
+//线程数据控制
 public class DataHandle {
 
     public DataHandle(TCPThread tcpThread) throws Exception {
         //对象数据的输入与输出，需要用ObjectInputStream和ObjectOutputStream进行
-        ObjectInputStream inputStream=tcpThread.getInputStream();
-        ObjectOutputStream outputStream=tcpThread.getOutputStream();
-        TCPVoteMsg clientMsg=(TCPVoteMsg)inputStream.readObject();
-        while(tcpThread.flag){
-            System.out.println("get client Msg:"+clientMsg.getStatusCode());
-            System.out.println("get client Vote:"+clientMsg.getVoteId());
-            DataBaseConnect dbConnect = new DataBaseConnect();
+        ObjectInputStream inputStream = tcpThread.getInputStream();
+        ObjectOutputStream outputStream = tcpThread.getOutputStream();
+        DataBaseConnect dbConnect = new DataBaseConnect();
+        while (tcpThread.flag) {
+            TCPVoteMsg clientMsg = (TCPVoteMsg) inputStream.readObject();
+            System.out.println("get client UID:"+clientMsg.getSerialVersionUID());
+            System.out.println("get client Msg:" + clientMsg.getStatusCode());
+            System.out.println("get client Vote:" + clientMsg.getVoteId());
             try {
-                List<Vote> result=dbConnect.selectVoteTable();
-                outputStream.writeObject(new TCPVoteMsg(999,result));
-                System.out.println(result);
+                switch (clientMsg.getStatusCode()) {
+                    case 101: {//查询投票
+                        List<Vote> result = dbConnect.selectVoteTable();
+                        TCPVoteMsg tcpVoteMsg = new TCPVoteMsg(901, result);
+                        outputStream.writeObject(tcpVoteMsg);
+                        System.out.println(result);
+                    }
+                    break;
+                    case 201: {//查询候选人
+                        List<Candidate> result = dbConnect.selectCandidateTable(clientMsg);
+                        outputStream.writeObject(new TCPVoteMsg(902,clientMsg.getVoteId(),clientMsg.getCandidateId(),result));
+                        System.out.println(result);
+                    }
+                    break;
+                    case 301:{//投票
+                        if(dbConnect.insertVote(clientMsg)){
+                            outputStream.writeObject(new TCPVoteMsg(903));
+                            System.out.println("true");
+                        }
+                    }
+                        break;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            tcpThread.close();
+
             //outputStream.writeObject(new TCPVoteMsg(999,result));
-            clientMsg=(TCPVoteMsg)inputStream.readObject();
+            //clientMsg=(TCPVoteMsg)inputStream.readObject();
         }
+        tcpThread.close();
 //        Reader reader = new InputStreamReader(socket.getInputStream());
 //        char chars[] = new char[64];
 //        int len;
@@ -49,8 +70,5 @@ public class DataHandle {
 //        socket.close();
     }
 
-    //查询表单
-    public void selectDataBase(TCPVoteMsg clientMsg){
 
-    }
 }

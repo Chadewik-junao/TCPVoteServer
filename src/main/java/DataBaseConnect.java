@@ -62,7 +62,7 @@ public class DataBaseConnect {
 
     //查询对应投票的候选人
     public List<Candidate> selectCandidateTable(TCPVoteMsg clientMsg)throws Exception{
-        String sql="select * from candidatetable where "+clientMsg.getVoteId();
+        String sql="select * from candidatetable where `投票编号`="+clientMsg.getVoteId();
         stt = dbConnection.createStatement();
         List<Candidate> candidatesList=new ArrayList<>();
         // 返回结果集

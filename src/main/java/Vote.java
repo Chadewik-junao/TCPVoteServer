@@ -3,10 +3,12 @@ import java.sql.Date;
 
 //投票类
 public class Vote implements Serializable {
+    private static final long serialVersionUID = 8888L;
     private String voteId;//投票id
     private String voteName;//投票名
     private Date startDate, StopDate;//起止时间
     private int allVotes;//总票数
+
 
     public Vote(String voteId, String voteName, Date startDate, Date stopDate, int allVotes) {
         this.voteId = voteId;
