@@ -86,9 +86,62 @@ public class DataBaseConnect {
         else return false;
     }
 
+    public boolean updatevote(String name ,String vote)throws Exception{
+//        System.out.println(" id:"+clientMsg.getVoteId()+" cid:"+clientMsg.getVoter().getVoteCandidateId()+" name:"+clientMsg.getVoter().getVoterName()+" time:"+clientMsg.getVoter().getTime()+" cpuid:"+clientMsg.getVoter().getCpuid()+" ipv4:"+clientMsg.getVoter().getIp4());
+        String sql = "update votetable set `投票名`='"+name+"' where `投票编号`='"+vote+"';";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
+    }
+
+    public boolean newcandidate(String vote ,String candidate,String name)throws Exception{
+//        System.out.println(" id:"+clientMsg.getVoteId()+" cid:"+clientMsg.getVoter().getVoteCandidateId()+" name:"+clientMsg.getVoter().getVoterName()+" time:"+clientMsg.getVoter().getTime()+" cpuid:"+clientMsg.getVoter().getCpuid()+" ipv4:"+clientMsg.getVoter().getIp4());
+        String sql = "insert into candidatetable(`投票编号`,`候选人编号`,`候选人名字`) values('"+vote+"' ,'"+candidate+"' ,'"+name+"' );";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
+    }
+
+    public boolean updatecandidate(String vote,String candidate,String name )throws Exception{
+//        System.out.println(" id:"+clientMsg.getVoteId()+" cid:"+clientMsg.getVoter().getVoteCandidateId()+" name:"+clientMsg.getVoter().getVoterName()+" time:"+clientMsg.getVoter().getTime()+" cpuid:"+clientMsg.getVoter().getCpuid()+" ipv4:"+clientMsg.getVoter().getIp4());
+        String sql = "update candidatetable set  `候选人名字`='"+name+"' where `候选人编号`='"+candidate+"';";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
+    }
+
 
     //断开连接
     public void disConnect(){
 
+    }
+
+    public boolean updatevotetime(String vote,String starttime,String stoptime) throws Exception{
+        String sql = "update votetable set  `起始时间`='"+starttime+"',`截至时间`='"+stoptime+"' where `投票编号`='"+vote+"';";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
+    }
+
+    public boolean newvote(String voteid,String vote) throws  Exception{
+        String sql = "insert into votetable(`投票编号`,`投票名`,`起始时间`,`截至时间`) values('"+voteid+"','"+vote+"' ,now() ,now() );";
+        //获取Statement对象
+        stt = dbConnection.createStatement();
+        //执行sql语句
+        int result=stt.executeUpdate(sql);
+        if(result>0)return true;
+        else return false;
     }
 }

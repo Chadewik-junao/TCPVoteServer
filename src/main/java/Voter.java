@@ -1,20 +1,20 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
-import java.text.SimpleDateFormat;
-
-public class Voter {
+public class Voter implements Serializable {
     private String voteId;//投票id
     private String voteCandidateId;//被投票人
     private String voterName;//投票人名字
     private String time;//时间
     private String cpuid;//
     private InetAddress ip4;//
+    private static final long serialVersionUID = 4444L;
 
     {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
